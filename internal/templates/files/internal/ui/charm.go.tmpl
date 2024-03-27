@@ -1,0 +1,56 @@
+package ui
+
+import (
+	"errors"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/huh"
+)
+
+type TextInputForm struct {
+	form    *huh.Form
+	Message *string
+}
+
+func NewTextInputForm() TextInputForm {
+	input := huh.NewInput().
+		Key("textInput").
+		Title("Enter your name:").
+		Placeholder("Type here...").
+		Validate(func(s string) error {
+			if s == "" {
+				return errors.New("input cannot be empty")
+			}
+			return nil
+		})
+
+	form := huh.NewForm(huh.NewGroup(input)).WithTheme(huh.ThemeBase())
+
+	return TextInputForm{
+		form:    form,
+		Message: new(string),
+	}
+}
+
+func (f TextInputForm) Init() tea.Cmd {
+	return f.form.Init()
+}
+
+func (f TextInputForm) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
+	form, cmd := f.form.Update(msg)
+	if form, ok := form.(*huh.Form); ok {
+		f.form = form
+	}
+
+	if f.form.State == huh.StateCompleted {
+		*f.Message = f.form.GetString("textInput")
+		return f, tea.Quit
+	}
+
+	return f, cmd
+}
+
+func (f TextInputForm) View() string {
+	return f.form.View()
+}
