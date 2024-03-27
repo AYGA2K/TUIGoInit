@@ -4,10 +4,3 @@ TUIGoInit is a TUI tool designed to quickly initialize a Text-based User Interfa
 
 ![image](./public/image.png)
 
-# Installation
-
-TUIGoInit can be installed via `go install`:
-```bash
-go install github.com/AYGA2K/TUIGoInit@latest
-```
-
