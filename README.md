@@ -4,3 +4,6 @@ TUIGoInit is a TUI tool designed to quickly initialize a Text-based User Interfa
 
 ![image](./public/demo.gif)
 
+# Result
+
+![image](./public/result.png)
